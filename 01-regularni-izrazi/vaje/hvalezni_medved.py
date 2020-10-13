@@ -25,7 +25,12 @@ medved. Zvrhano zibelko sladkih hrušk mi je prinesel za en sam izdrt trn"."""
 # >>> find_words(test_text, 'de')
 # {'izdere', 'debel', 'oddide', 'začudeno'}
 ###############################################################################
+import re
 
+def find_words(niz, podniz):
+    pat = r'\b\w*'+ podniz + r'\w*\b'
+
+    return set(re.findall(pat, niz))
 
 ###############################################################################
 # 2) Sestavite funkcijo [find_prefix], ki vrne množico vseh besed, ki se
@@ -52,3 +57,6 @@ medved. Zvrhano zibelko sladkih hrušk mi je prinesel za en sam izdrt trn"."""
 # >>> double_letters('A volunteer is worth twenty pressed men.')
 # {'volunteer', 'pressed'}
 ###############################################################################
+def double_letters(niz):
+    vzorec = r'\b(\w*(\w)\2\w*)\b'
+    return set(i[0] for i in re.findall(vzorec, niz))
