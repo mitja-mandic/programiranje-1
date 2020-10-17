@@ -29,7 +29,6 @@ import re
 
 def find_words(niz, podniz):
     pat = r'\b\w*'+ podniz + r'\w*\b'
-
     return set(re.findall(pat, niz))
 
 ###############################################################################
