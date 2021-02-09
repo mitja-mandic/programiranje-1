@@ -38,14 +38,14 @@ let rec repeat x n =  if n <= 0 then [] else x :: (repeat x (n-1))
  - : int list = [0; 1; 2; 3; 4; 5; 6; 7; 8; 9; 10]
 [*----------------------------------------------------------------------------*)
 
-let range = 
+let range m = 
   let rec range_pom acc n = 
     if n < 0 then acc
     else 
       let nov_acc = n::acc in
       range_pom nov_acc (n-1)
   in
-  range_pom []
+  range_pom [] m
    
 
 (*----------------------------------------------------------------------------*]

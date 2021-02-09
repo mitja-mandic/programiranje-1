@@ -1,6 +1,6 @@
 from functools import lru_cache
 # =============================================================================
-# Najdaljše naraščajoče podzaporedje
+# Najdaljše naraščajoče podzapo redje
 # =============================================================================
 
 # -----------------------------------------------------------------------------
@@ -10,6 +10,26 @@ from functools import lru_cache
 # Primer: v seznamu `[2, 3, 6, 8, 4, 4, 6, 7, 12, 8, 9]` kot rezultat vrne
 # podzaporedje `[2, 3, 4, 4, 6, 7, 8, 9]`.
 # -----------------------------------------------------------------------------
+
+def najdaljse_narascajoce_podzaporedje(l):
+    #memoiziramo to funkcijo
+
+    @lru_cache(maxsize=None)
+    def podzaporedje(i, zadnji):
+        if i >= len(l):
+            return []
+        elif l[i] >= zadnji:
+            vzamemo = [l[i]] + podzaporedje(i+1, l[i])
+            ne_vzamemo = podzaporedje(i+1, zadnji)
+            if len(vzamemo) >= len(ne_vzamemo):
+                return vzamemo
+            else:
+                return ne_vzamemo
+        else: #l[i] < zadnji
+            #gremo naprej ali začnemo novo zaporedje z l[i] -> [l[i],...] -> To se ne splača
+            return podzaporedje(i+1, zadnji)
+    return podzaporedje(0,float("-inf"))
+
 
 # -----------------------------------------------------------------------------
 # Rešitev sedaj popravite tako, da funkcija `vsa_najdaljsa` vrne seznam vseh
@@ -43,7 +63,16 @@ from functools import lru_cache
 # dva.
 # =============================================================================
 
-
+def pobeg(marost):
+    
+    def pobeg_notranja(i, e_ostanek):
+        if i>= len(marost):
+            return 0
+        energija = e_ostanek + marost[i]
+        navzdol = [pobeg_notranja(i + dolzina_skoka, energija-dolzina_skoka)
+                    for dolzina_skoka in range(1,energija+1)]
+        return 1 + min(navzdol)
+    return pobeg_notranja(0,0)
 
 # =============================================================================
 # Nageljni
@@ -158,7 +187,7 @@ def nageljni_stevilo(n, m, l):
 # medtem ko iz vrste 5 in stolpca 0 ne more pobegniti.
 # =============================================================================
 
-def pobeg(soba, vrsta, stolpec, koraki):
+def moznost_pobega(soba, vrsta, stolpec, koraki):
     max_vrsta = len(soba)
     max_stolpec = len(soba[0])
 
